@@ -45,6 +45,13 @@ document.addEventListener('DOMContentLoaded', function () {
     onTap: null
   });
 
+  // Initialize signature manager BEFORE reader (reader's init callback calls SignatureManager)
+  SignatureManager.init(pageWrapper, function () {
+    if (activeTool) {
+      AnnotationLayer.setActive(true);
+    }
+  });
+
   // Initialize reader
   EbookReader.init(pageContent, pageIndicator, function (pageIndex, action) {
     if (action === 'leave') {
@@ -55,19 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
       SignatureManager.showPageSignatures(pageIndex);
     }
   });
-
-  // Initialize signature manager
-  SignatureManager.init(pageWrapper, function () {
-    // Re-enable annotation tool after signature placement
-    if (activeTool) {
-      AnnotationLayer.setActive(true);
-    }
-  });
-
-  // Load initial page annotations
-  var initialPage = EbookReader.getCurrentPage();
-  AnnotationLayer.switchPage(initialPage);
-  SignatureManager.showPageSignatures(initialPage);
 
   // Tool selection
   function setActiveTool(tool) {
