@@ -18,6 +18,8 @@ var SignatureManager = (function () {
   var onPlacementDone = null;
   var sigLastPoint = null;
   var sigHasStrokes = false;
+  var pendingFieldKey = null;
+  var pendingFieldEl = null;
 
   function drawSigSegment(from, to) {
     sigCtx.save();
@@ -176,6 +178,39 @@ var SignatureManager = (function () {
     }
   }
 
+  function placeSignatureInField(fieldKey, fieldEl, blob) {
+    var sigId = 'sig-' + Date.now();
+    var today = new Date();
+    var dateStr = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+    StorageManager.saveSignature(sigId, blob).then(function () {
+      var placement = { fieldKey: fieldKey, sigId: sigId, date: dateStr };
+      placedSignatures.push(placement);
+      StorageManager.saveSignaturePlacements(placedSignatures);
+
+      // Fill the field visually
+      var area = fieldEl.querySelector('.sig-field-area');
+      if (area) {
+        area.innerHTML = '';
+        var img = document.createElement('img');
+        img.className = 'sig-field-img';
+        img.alt = '簽名';
+        img.src = URL.createObjectURL(blob);
+        area.appendChild(img);
+      }
+      fieldEl.classList.add('signed');
+
+      // Fill date
+      var row = fieldEl.parentElement;
+      if (row) {
+        var dateEl = row.querySelector('.sig-date-value');
+        if (dateEl) dateEl.textContent = dateStr;
+      }
+
+      if (onPlacementDone) onPlacementDone();
+    });
+  }
+
   function clearRenderedSignatures() {
     var existing = pageWrapper.querySelectorAll('.placed-signature');
     for (var i = 0; i < existing.length; i++) {
@@ -213,6 +248,8 @@ var SignatureManager = (function () {
       document.getElementById('sig-cancel').addEventListener('click', function () {
         clearSigCanvas();
         modal.classList.remove('open');
+        pendingFieldKey = null;
+        pendingFieldEl = null;
       });
 
       document.getElementById('sig-clear').addEventListener('click', function () {
@@ -225,7 +262,14 @@ var SignatureManager = (function () {
           currentBlob = blob;
           currentBlobUrl = URL.createObjectURL(blob);
           modal.classList.remove('open');
-          showPlacer(currentBlobUrl);
+
+          if (pendingFieldKey && pendingFieldEl) {
+            placeSignatureInField(pendingFieldKey, pendingFieldEl, blob);
+            pendingFieldKey = null;
+            pendingFieldEl = null;
+          } else {
+            showPlacer(currentBlobUrl);
+          }
         }, 'image/png');
       });
 
@@ -245,6 +289,15 @@ var SignatureManager = (function () {
     },
 
     openModal: function () {
+      pendingFieldKey = null;
+      pendingFieldEl = null;
+      clearSigCanvas();
+      modal.classList.add('open');
+    },
+
+    openForField: function (fieldKey, fieldEl) {
+      pendingFieldKey = fieldKey;
+      pendingFieldEl = fieldEl;
       clearSigCanvas();
       modal.classList.add('open');
     },

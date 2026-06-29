@@ -161,3 +161,88 @@
 .sig-delete-tooltip.show {
   opacity: 1;
 }
+
+/* ── Signature fields embedded in page content ── */
+.signature-field-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin: 20px 0 12px;
+}
+
+.signature-field {
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.signature-date-field {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.sig-field-label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.sig-field-area {
+  height: 64px;
+  border-bottom: 2px solid var(--color-text);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.signature-field:not(.signed):hover .sig-field-area {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.signature-field:not(.signed):active .sig-field-area {
+  background: #d2e3fc;
+}
+
+.sig-field-hint {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+.signature-field.signed .sig-field-hint {
+  display: none;
+}
+
+.sig-field-img {
+  display: block;
+  max-height: 56px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.sig-date-value {
+  height: 64px;
+  border-bottom: 2px solid var(--color-text);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .signature-field-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .signature-date-field {
+    width: 100%;
+  }
+}

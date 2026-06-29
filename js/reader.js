@@ -6,6 +6,22 @@ var EbookReader = (function () {
   var onPageChange = null;
 
   // Sample ebook content with checklist items
+  var SIG_FIELD = '<div class="signature-field" data-sig-field="0">' +
+    '<div class="sig-field-label">簽名欄</div>' +
+    '<div class="sig-field-area">' +
+      '<span class="sig-field-hint">點擊此處簽名</span>' +
+    '</div></div>';
+
+  var SIG_FIELD_DATE = '<div class="signature-field-row">' +
+    '<div class="signature-field" data-sig-field="0">' +
+      '<div class="sig-field-label">簽名</div>' +
+      '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
+    '</div>' +
+    '<div class="signature-date-field">' +
+      '<div class="sig-field-label">日期</div>' +
+      '<div class="sig-date-value"></div>' +
+    '</div></div>';
+
   var SAMPLE_PAGES = [
     {
       html: '<h1>第一章：專案概述</h1>' +
@@ -24,6 +40,17 @@ var EbookReader = (function () {
         '<div class="checklist-item" data-index="2">' +
           '<div class="checklist-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/></svg></div>' +
           '<span class="checklist-label">說明專案經理的角色與職責</span>' +
+        '</div>' +
+        '<h2>確認簽名</h2>' +
+        '<div class="signature-field-row">' +
+          '<div class="signature-field" data-sig-field="0">' +
+            '<div class="sig-field-label">學員簽名</div>' +
+            '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
+          '</div>' +
+          '<div class="signature-date-field">' +
+            '<div class="sig-field-label">日期</div>' +
+            '<div class="sig-date-value"></div>' +
+          '</div>' +
         '</div>'
     },
     {
@@ -50,6 +77,17 @@ var EbookReader = (function () {
         '<div class="checklist-item" data-index="4">' +
           '<div class="checklist-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/></svg></div>' +
           '<span class="checklist-label">取得專案發起人核准</span>' +
+        '</div>' +
+        '<h2>確認簽名</h2>' +
+        '<div class="signature-field-row">' +
+          '<div class="signature-field" data-sig-field="0">' +
+            '<div class="sig-field-label">專案經理簽名</div>' +
+            '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
+          '</div>' +
+          '<div class="signature-date-field">' +
+            '<div class="sig-field-label">日期</div>' +
+            '<div class="sig-date-value"></div>' +
+          '</div>' +
         '</div>'
     },
     {
@@ -72,6 +110,17 @@ var EbookReader = (function () {
         '<div class="checklist-item" data-index="3">' +
           '<div class="checklist-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/></svg></div>' +
           '<span class="checklist-label">規劃風險管理策略</span>' +
+        '</div>' +
+        '<h2>確認簽名</h2>' +
+        '<div class="signature-field-row">' +
+          '<div class="signature-field" data-sig-field="0">' +
+            '<div class="sig-field-label">負責人簽名</div>' +
+            '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
+          '</div>' +
+          '<div class="signature-date-field">' +
+            '<div class="sig-field-label">日期</div>' +
+            '<div class="sig-date-value"></div>' +
+          '</div>' +
         '</div>'
     },
     {
@@ -94,6 +143,17 @@ var EbookReader = (function () {
         '<div class="checklist-item" data-index="3">' +
           '<div class="checklist-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/></svg></div>' +
           '<span class="checklist-label">與利害關係人溝通進度</span>' +
+        '</div>' +
+        '<h2>確認簽名</h2>' +
+        '<div class="signature-field-row">' +
+          '<div class="signature-field" data-sig-field="0">' +
+            '<div class="sig-field-label">主管簽名</div>' +
+            '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
+          '</div>' +
+          '<div class="signature-date-field">' +
+            '<div class="sig-field-label">日期</div>' +
+            '<div class="sig-date-value"></div>' +
+          '</div>' +
         '</div>'
     },
     {
@@ -121,8 +181,27 @@ var EbookReader = (function () {
           '<div class="checklist-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/></svg></div>' +
           '<span class="checklist-label">釋放專案資源</span>' +
         '</div>' +
-        '<br>' +
-        '<p><em>請在每項確認後簽名以示完成。</em></p>'
+        '<h2>結案確認簽名</h2>' +
+        '<div class="signature-field-row">' +
+          '<div class="signature-field" data-sig-field="0">' +
+            '<div class="sig-field-label">專案經理簽名</div>' +
+            '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
+          '</div>' +
+          '<div class="signature-date-field">' +
+            '<div class="sig-field-label">日期</div>' +
+            '<div class="sig-date-value"></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="signature-field-row">' +
+          '<div class="signature-field" data-sig-field="1">' +
+            '<div class="sig-field-label">客戶簽名</div>' +
+            '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
+          '</div>' +
+          '<div class="signature-date-field">' +
+            '<div class="sig-field-label">日期</div>' +
+            '<div class="sig-date-value"></div>' +
+          '</div>' +
+        '</div>'
     }
   ];
 
@@ -147,6 +226,65 @@ var EbookReader = (function () {
 
     // Bind checklist click events
     bindChecklistEvents();
+
+    // Bind signature field events and restore saved signatures
+    bindSignatureFields();
+  }
+
+  function bindSignatureFields() {
+    var fields = pageContentEl.querySelectorAll('.signature-field');
+    var savedSigs = StorageManager.loadSignaturePlacements();
+
+    for (var i = 0; i < fields.length; i++) {
+      var field = fields[i];
+      var fieldId = field.getAttribute('data-sig-field');
+      var key = currentPage + '-' + fieldId;
+
+      // Restore saved signature
+      var saved = null;
+      for (var j = 0; j < savedSigs.length; j++) {
+        if (savedSigs[j].fieldKey === key) {
+          saved = savedSigs[j];
+          break;
+        }
+      }
+
+      if (saved) {
+        fillSignatureField(field, saved);
+      }
+
+      field.addEventListener('click', handleSignatureFieldClick);
+    }
+  }
+
+  function fillSignatureField(field, saved) {
+    var area = field.querySelector('.sig-field-area');
+    area.innerHTML = '';
+    var img = document.createElement('img');
+    img.className = 'sig-field-img';
+    img.alt = '簽名';
+    StorageManager.loadSignature(saved.sigId).then(function (blob) {
+      if (blob) img.src = URL.createObjectURL(blob);
+    });
+    area.appendChild(img);
+    field.classList.add('signed');
+
+    // Fill date in sibling date field
+    var row = field.parentElement;
+    if (row && saved.date) {
+      var dateEl = row.querySelector('.sig-date-value');
+      if (dateEl) dateEl.textContent = saved.date;
+    }
+  }
+
+  function handleSignatureFieldClick(e) {
+    var field = e.currentTarget;
+    if (field.classList.contains('signed')) return;
+    var fieldId = field.getAttribute('data-sig-field');
+    var key = currentPage + '-' + fieldId;
+    if (typeof SignatureManager !== 'undefined') {
+      SignatureManager.openForField(key, field);
+    }
   }
 
   function bindChecklistEvents() {
