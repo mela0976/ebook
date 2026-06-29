@@ -44,7 +44,7 @@ var EbookReader = (function () {
         '<h2>確認簽名</h2>' +
         '<div class="signature-field-row">' +
           '<div class="signature-field" data-sig-field="0">' +
-            '<div class="sig-field-label">學員簽名</div>' +
+            '<div class="sig-field-label">簽名</div>' +
             '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
           '</div>' +
           '<div class="signature-date-field">' +
@@ -81,7 +81,7 @@ var EbookReader = (function () {
         '<h2>確認簽名</h2>' +
         '<div class="signature-field-row">' +
           '<div class="signature-field" data-sig-field="0">' +
-            '<div class="sig-field-label">專案經理簽名</div>' +
+            '<div class="sig-field-label">簽名</div>' +
             '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
           '</div>' +
           '<div class="signature-date-field">' +
@@ -114,7 +114,7 @@ var EbookReader = (function () {
         '<h2>確認簽名</h2>' +
         '<div class="signature-field-row">' +
           '<div class="signature-field" data-sig-field="0">' +
-            '<div class="sig-field-label">負責人簽名</div>' +
+            '<div class="sig-field-label">簽名</div>' +
             '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
           '</div>' +
           '<div class="signature-date-field">' +
@@ -147,7 +147,7 @@ var EbookReader = (function () {
         '<h2>確認簽名</h2>' +
         '<div class="signature-field-row">' +
           '<div class="signature-field" data-sig-field="0">' +
-            '<div class="sig-field-label">主管簽名</div>' +
+            '<div class="sig-field-label">簽名</div>' +
             '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
           '</div>' +
           '<div class="signature-date-field">' +
@@ -184,17 +184,7 @@ var EbookReader = (function () {
         '<h2>結案確認簽名</h2>' +
         '<div class="signature-field-row">' +
           '<div class="signature-field" data-sig-field="0">' +
-            '<div class="sig-field-label">專案經理簽名</div>' +
-            '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
-          '</div>' +
-          '<div class="signature-date-field">' +
-            '<div class="sig-field-label">日期</div>' +
-            '<div class="sig-date-value"></div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="signature-field-row">' +
-          '<div class="signature-field" data-sig-field="1">' +
-            '<div class="sig-field-label">客戶簽名</div>' +
+            '<div class="sig-field-label">簽名</div>' +
             '<div class="sig-field-area"><span class="sig-field-hint">點擊此處簽名</span></div>' +
           '</div>' +
           '<div class="signature-date-field">' +
